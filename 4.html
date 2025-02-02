@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=New+Rocker|Bellefair|Yatra+One|Bonbon|Princess+Sofia|Amarante" rel="stylesheet">
+  <title>Women Safety</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css" title="style">
+  <style>
+    
+    body {
+      font-family: 'Amarante', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #abccd7;
+    }
+
+    #header {
+      background-color: #0d447e;
+      padding: 20px;
+      text-align: center;
+      color: rgb(255, 255, 255);
+    }
+
+    #logo h1 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    #logo h2 {
+      font-size: 20px;
+      margin-top: 5px;
+    }
+
+    #menubar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+    }
+
+    #menubar ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    #menubar ul li a {
+      text-decoration: none;
+      color: rgb(255, 245, 245);
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    #menubar ul li a:hover {
+      color: #811212;
+      text-decoration: underline;
+    }
+
+    
+    #site_content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    #content h1 {
+      font-size: 32px;
+      color: #13287f;
+      margin: 20px 0;
+    }
+
+    .zoomimage img {
+      cursor: pointer;
+      background-color: #3073c0;
+      max-width: 45%;
+      max-height: 45%;
+      margin: 20px;
+      padding: 10px;
+     }
+
+    .zoomimage img:hover {
+      transform: scale(1.05);
+    }
+
+    #footer {
+      background-color: #0d4376;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+  
+    @media screen and (max-width: 768px) {
+      #logo h1 {
+        font-size: 28px;
+      }
+
+      #menubar ul {
+        text-align: left;
+      }
+
+      #menubar ul li {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .zoomimage img {
+        max-width: 80%;
+        margin: 10px auto;
+      }
+
+      #content h1 {
+        font-size: 24px;
+      }
+    }
+
+  
+    .audio-controls {
+      margin: 20px;
+    }
+
+    .audio-controls button {
+      background-color: #072d61;
+      color: rgb(255, 255, 255);
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .audio-controls button:hover {
+      background-color: #9e47e5;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+          <h1><span class="logo_colour">Hey!!! &nbsp</span><span class="logo_colour2">Making Sure Your Safety</span></h1>
+          <h2>Take care of yourself. Many people out there love you.</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <li><a href="index.html">Welcome Page</a></li>
+          <li><a href="1.html">Navigation</a></li>
+          <li><a href="2.html">Safe Zone</a></li>
+          <li><a href="3.html">Guardians</a></li>
+          <li class="selected"><a href="4.html">Safety Alarm</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const audio = document.getElementById('audio');
+
+        function play() {
+          audio.play().catch(error => {
+            console.error('Error playing audio:', error);
+            alert('Unable to play the audio. Please interact with the page first.');
+          });
+        }
+
+        function pause() {
+          audio.pause();
+        }
+
+        document.getElementById('playButton').addEventListener('click', play);
+        document.getElementById('pauseButton').addEventListener('click', pause);
+      });
+    </script>
+
+    <audio id="audio" src="images_siren.mp3"></audio>
+
+    <div id="site_content">
+      <div class="zoomimage">
+        <img src="./sos.jpeg" id="playButton" alt="SOS Image">
+        <img src="./stop.png" id="pauseButton" alt="Stop Image">
+      </div>
+      <div id="content">
+        <h1>!!! Keep Calm, Someone Will Hear You and Come for Help... !!!</h1>
+      </div>
+    </div>
+
+    <div class="audio-controls">
+      <button id="playButton">Play Alarm</button>
+      <button id="pauseButton">Pause Alarm</button>
+    </div>
+  </div>
+
+  <div id="footer">
+    With Love by ❤️ Team JOSHWA
+  </div>
+</body>
+
+</html>

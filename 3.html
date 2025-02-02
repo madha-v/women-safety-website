@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Women Safety - Guardians</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #fef6f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* Header */
+    #header {
+      background: #111f56fb;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #header h1 {
+      font-size: 2.5rem;
+    }
+
+    #header h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+
+    /* Navigation Bar */
+    #menubar {
+      background: #090c55;
+      padding: 10px;
+    }
+
+    #menubar ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    #menubar li {
+      padding: 10px 20px;
+    }
+
+    #menubar a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    #menubar .selected a {
+      border-bottom: 2px solid white;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      background: #ffe4e1;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .sidebar h3 {
+      font-size: 1.4rem;
+      color: #ff4d4d;
+    }
+
+    .sidebar h4 {
+      cursor: pointer;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .sidebar h4:hover {
+      color: #ff4d4d;
+      text-decoration: underline;
+    }
+
+    .sidebar p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* Content Section */
+    #content1 {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+
+    #content1 label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    #content1 input, #content1 textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #content1 button {
+      background: #0808b0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #content1 button:hover {
+      background: #ff6f61;
+    }
+
+    /* Footer */
+    #footer {
+      background: #3f0991c3;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div id="header">
+    <h1>Guardians</h1>
+    <h2>Stay connected with your loved ones</h2>
+  </div>
+
+  <!-- Navigation Menu -->
+  <div id="menubar">
+    <ul>
+      <li><a href="index.html">Welcome Page</a></li>
+      <li><a href="1.html">Navigation</a></li>
+      <li><a href="2.html">Safe Zone</a></li>
+      <li class="selected"><a href="3.html">Guardians</a></li>
+      <li><a href="4.html">Safety Alarm</a></li>
+    </ul>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>Quick Contacts</h3>
+    <p>Click on a name to autofill their number and send a message.</p>
+    <h4 onclick="changeNumber('9825042341')">Papa</h4>
+    <p>Active</p>
+    <h4 onclick="changeNumber('7698225243')">Mummy</h4>
+    <p>Active</p>
+    <h4 onclick="changeNumber('7355307053')">Husband</h4>
+    <p>Silent</p>
+    <h4 onclick="changeNumber('7922823736')">Jahnvi</h4>
+    <p>Active</p>
+  </div>
+
+  
+  <div id="content1">
+    <h3>Send an Alert Message</h3>
+    <form>
+      <label for="number1">Mobile Number</label>
+      <input type="tel" id="number1" placeholder="Enter or autofill a number" required>
+      
+      <label for="textMessage1">Message</label>
+      <textarea id="textMessage1" rows="3" placeholder="Please save me. I am in danger!" maxlength="158"></textarea>
+
+      <button type="button" onclick="sendMessage()">Send Message</button>
+      <button type="button" onclick="clearFields()">Clear</button>
+    </form>
+  </div>
+
+  
+  <div id="footer">
+    <p>Made with  by Team Joshwa</p>
+  </div>
+
+  <script>
+   
+    function changeNumber(number) {
+      document.getElementById('number1').value = number;
+    }
+
+    
+    function clearFields() {
+      document.getElementById('number1').value = '';
+      document.getElementById('textMessage1').value = '';
+    }
+
+
+    function sendMessage() {
+      const number = document.getElementById('number1').value;
+      const message = document.getElementById('textMessage1').value;
+
+      if (!number || !message) {
+        alert('Please fill out both fields before sending.');
+        return;
+      }
+
+      alert(`Message sent to ${number}:\n"${message}"`);
+    }
+  </script>
+</body>
+</html>

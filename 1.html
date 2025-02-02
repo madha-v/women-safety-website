@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Women Safety - Safe Zone</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fef6f9; /* Light pink background for comfort */
+      color: #333;
+    }
+
+    /* Header */
+    #menubar {
+      background-color: #1c3c69;
+      padding: 10px;
+    }
+
+    ul#menu {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul#menu li {
+      padding: 10px 20px;
+    }
+
+    ul#menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    ul#menu li.selected a {
+      border-bottom: 2px solid white;
+    }
+
+    /* Map Section */
+    #map-container {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    #map {
+      width: 75%;
+      height: 500px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+    }
+
+    #right-panel {
+      width: 20%;
+      background: #ffe4e1;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #right-panel h3 {
+      font-size: 1.2rem;
+      color: #0147f6;
+    }
+
+    #right-panel select, #right-panel input, #right-panel button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #output {
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* Footer */
+    #footer {
+      background: #134969;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 20px;
+    }
+    #header{
+      background-size: cover;
+      background-position-x: center;
+    }
+
+    #footer a {
+      color: white;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+ 
+  <div id="menubar">
+    <ul id="menu">
+      <li><a href="index.html">Welcome Page</a></li>
+      <li><a href="1.html">Navigation</a></li>
+      <li class="selected"><a href="2.html">Safe Zone</a></li>
+      <li><a href="3.html">Guardians</a></li>
+      <li><a href="4.html">Safety Alarm</a></li>
+    </ul>
+  </div>
+
+  <!-- Map and Safe Zone Features -->
+  <div id="map-container">
+    <!-- Google Map -->
+    <div id="map"></div>
+
+    <!-- Right Panel -->
+    <div id="right-panel">
+      <h3>Safe Zone Finder</h3>
+      <label for="travel-mode">Select Travel Mode:</label>
+      <select id="travel-mode">
+        <option value="DRIVING">Driving</option>
+        <option value="WALKING">Walking</option>
+        <option value="BICYCLING">Bicycling</option>
+        <option value="TRANSIT">Public Transit</option>
+      </select>
+      <button onclick="showUserLocation()">Show My Location</button>
+      <div id="output"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer">
+    <p>Made with ❤️ by Team Joshwa | © 2024 Women Safety Platform</p>
+  </div>
+
+  
+  <script>
+    let map;
+    let markersArray = [];
+    const bounds = new google.maps.LatLngBounds();
+
+    // Initialize Map
+    function initMap() {
+      const origin = { lat: 12.9197, lng: 77.6836 };
+      const destination = { lat: 12.9288891, lng: 77.62845209999999 };
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: origin,
+        zoom: 10,
+      });
+
+      const geocoder = new google.maps.Geocoder();
+      const service = new google.maps.DistanceMatrixService();
+
+      service.getDistanceMatrix({
+        origins: [origin],
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+      }, (response, status) => {
+        if (status === 'OK') {
+          const originList = response.originAddresses;
+          const destinationList = response.destinationAddresses;
+          const outputDiv = document.getElementById('output');
+          outputDiv.innerHTML = '';
+
+          originList.forEach((origin, i) => {
+            const results = response.rows[i].elements;
+            results.forEach((result, j) => {
+              outputDiv.innerHTML += `
+                <p>From: ${origin} <br>To: ${destinationList[j]} <br>
+                Distance: ${result.distance.text}, Duration: ${result.duration.text}</p>
+              `;
+              addMarker(origin, geocoder, false);
+              addMarker(destinationList[j], geocoder, true);
+            });
+          });
+        } else {
+          alert('Error: ' + status);
+        }
+      });
+    }
+
+    // Add Marker to Map
+    function addMarker(address, geocoder, isDestination) {
+      const icon = isDestination
+        ? 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=D|FF0000|000000'
+        : 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=O|FFFF00|000000';
+
+      geocoder.geocode({ address }, (results, status) => {
+        if (status === 'OK') {
+          markersArray.push(new google.maps.Marker({
+            map,
+            position: results[0].geometry.location,
+            icon,
+          }));
+          bounds.extend(results[0].geometry.location);
+          map.fitBounds(bounds);
+        }
+      });
+    }
+
+    // Show User Location
+    function showUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          alert(`Your location: Latitude ${latitude}, Longitude ${longitude}`);
+          map.setCenter({ lat: latitude, lng: longitude });
+        });
+      } else {
+        alert('Geolocation is not supported by your browser.');
+      }
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbl-QdcG2sHyqxz4Qu_ZE7pjmZNY1KP7I&callback=initMap"></script>
+</body>
+</html>
